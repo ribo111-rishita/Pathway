@@ -32,15 +32,15 @@ const Hero = () => {
         </p>
 
         <div className="hero-actions">
-          <button className="btn btn-primary btn-lg">
+          <Link to="pricing" smooth={true} duration={500} offset={-80} className="btn btn-primary btn-lg" style={{ cursor: 'pointer', display: 'inline-flex' }}>
             <Play size={18} fill="currentColor" className="btn-icon" />
             Start Your Path
-          </button>
+          </Link>
 
-          <button className="btn btn-glass btn-lg">
+          <Link to="paths" smooth={true} duration={500} offset={-80} className="btn btn-glass btn-lg" style={{ cursor: 'pointer', display: 'inline-flex' }}>
             <Info size={18} className="btn-icon" />
             Explore Paths
-          </button>
+          </Link>
         </div>
       </div>
 

@@ -20,10 +20,10 @@ const Navbar = () => {
             PATHWAY
           </Link>
           <div className="nav-links">
-            <Link to="hero" smooth={true} duration={500} offset={-80} className="nav-link active">Home</Link>
-            <Link to="pricing" smooth={true} duration={500} offset={-80} className="nav-link">Pricing</Link>
-            <Link to="contact" smooth={true} duration={500} offset={-80} className="nav-link">Contact</Link>
-            <Link to="paths" smooth={true} duration={500} offset={-80} className="nav-link">Paths</Link>
+            <Link to="hero" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Home</Link>
+            <Link to="pricing" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Pricing</Link>
+            <Link to="contact" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Contact</Link>
+            <Link to="paths" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Paths</Link>
           </div>
         </div>
         <div className="nav-right">
