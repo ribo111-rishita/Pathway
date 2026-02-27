@@ -27,14 +27,14 @@ const Navbar = () => {
           </Link>
           <div className="nav-links">
             <Link to="hero" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Home</Link>
+            <Link to="features" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Features</Link>
+            <Link to="how-it-works" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">How it Works</Link>
             <Link to="pricing" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Pricing</Link>
-            <Link to="contact" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Contact</Link>
-            <Link to="paths" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Paths</Link>
           </div>
         </div>
         <div className="nav-right">
-          <button className="btn btn-ghost">Sign In</button>
-          <button className="btn btn-white">Join Now</button>
+          <button className="btn btn-ghost">Log In</button>
+          <button className="btn btn-primary btn-sm">Get Started</button>
         </div>
       </div>
       <style>{`

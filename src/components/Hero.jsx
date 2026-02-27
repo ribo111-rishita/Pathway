@@ -35,7 +35,7 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          Stop Learning<br />Blind.
+          Stop Guessing.<br />Start Learning.
         </motion.h1>
 
         <motion.p
@@ -44,7 +44,7 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          Structured learning paths so you always know what to learn<br />next. No more guessing. Just progress.
+          Pathway provides structured, AI-guided learning paths so you always know exactly what to learn next. Join 10,000+ learners achieving their goals.
         </motion.p>
 
         <motion.div
@@ -53,15 +53,30 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <Link to="pricing" smooth={true} duration={500} offset={-80} className="btn btn-primary btn-lg" style={{ cursor: 'pointer', display: 'inline-flex' }}>
+          <button className="btn btn-primary btn-lg" style={{ display: 'inline-flex' }}>
             <Play size={18} fill="currentColor" className="btn-icon" />
-            Start Your Path
-          </Link>
+            Start Your Free Path
+          </button>
 
-          <Link to="paths" smooth={true} duration={500} offset={-80} className="btn btn-glass btn-lg" style={{ cursor: 'pointer', display: 'inline-flex' }}>
+          <Link to="how-it-works" smooth={true} duration={500} offset={-80} className="btn btn-glass btn-lg" style={{ cursor: 'pointer', display: 'inline-flex' }}>
             <Info size={18} className="btn-icon" />
-            Explore Paths
+            See How It Works
           </Link>
+        </motion.div>
+
+        <motion.div
+          className="trust-banner"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1 }}
+        >
+          <p className="trust-text">Trusted by learners at top institutions</p>
+          <div className="trust-logos">
+            <span className="trust-logo">Stanford</span>
+            <span className="trust-logo">MIT</span>
+            <span className="trust-logo">Google</span>
+            <span className="trust-logo">Amazon</span>
+          </div>
         </motion.div>
       </div>
 
@@ -205,6 +220,43 @@ const Hero = () => {
           width: 1px;
           height: 40px;
           background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+        }
+
+        .trust-banner {
+          margin-top: 64px;
+          padding-top: 32px;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .trust-text {
+          font-size: 13px;
+          color: var(--text-secondary);
+          margin-bottom: 24px;
+          font-weight: 500;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        }
+
+        .trust-logos {
+          display: flex;
+          gap: 40px;
+          align-items: center;
+          flex-wrap: wrap;
+          opacity: 0.6;
+          filter: grayscale(100%);
+          transition: all 0.3s ease;
+        }
+
+        .trust-logos:hover {
+          opacity: 1;
+          filter: grayscale(0%);
+        }
+
+        .trust-logo {
+          font-size: 20px;
+          font-weight: 700;
+          color: white;
+          letter-spacing: -0.02em;
         }
 
         @media (max-width: 768px) {

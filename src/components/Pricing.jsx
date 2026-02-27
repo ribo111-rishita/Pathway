@@ -13,9 +13,9 @@ const Pricing = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="section-title">Simple, Transparent Pricing</h2>
+          <h2 className="section-title">Clear, Transparent Pricing</h2>
           <p className="section-subtitle">
-            Choose the plan that fits your learning goals. No hidden fees, cancel anytime.
+            Choose the plan that fits your goals. No hidden fees. Cancel or change plans anytime with one click.
           </p>
         </motion.div>
 
@@ -31,7 +31,7 @@ const Pricing = () => {
             <div className="card-header">
               <span className="tier-name">FREE</span>
               <h3 className="tier-price">Free</h3>
-              <p className="tier-desc">Perfect for casual learners exploring new topics.</p>
+              <p className="tier-desc">Get a feel for our learning paths with no commitment.</p>
             </div>
 
             <ul className="feature-list">
@@ -48,7 +48,7 @@ const Pricing = () => {
               </li>
             </ul>
 
-            <button className="btn btn-tier btn-ghost-bg">Get Started &rarr;</button>
+            <button className="btn btn-tier btn-ghost-bg">Start Free Plan</button>
           </motion.div>
 
           {/* Pro Tier (Highlighted) */}
@@ -82,7 +82,7 @@ const Pricing = () => {
               <li><Check size={16} className="feature-icon pro-icon" /> Certificate of completion</li>
             </ul>
 
-            <button className="btn btn-tier btn-primary">Get Started &rarr;</button>
+            <button className="btn btn-tier btn-primary">Start Pro Trial</button>
           </motion.div>
 
           {/* Institutional Tier */}
