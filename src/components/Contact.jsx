@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { User, Mail, MessageSquare, Send, MessageCircle, Check } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -18,14 +19,26 @@ const Contact = () => {
   return (
     <section id="contact" className="contact-section">
       <div className="container">
-        <div className="section-header">
+        <motion.div
+          className="section-header"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="section-title">Have Questions? Let's Talk.</h2>
           <p className="section-subtitle">
             We're here to help you find your perfect learning path.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="contact-container">
+        <motion.div
+          className="contact-container"
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           {status === 'success' ? (
             <div className="success-message">
               <div className="success-icon-wrapper">
@@ -90,16 +103,22 @@ const Contact = () => {
               </button>
             </form>
           )}
-        </div>
+        </motion.div>
 
-        <div className="contact-footer">
+        <motion.div
+          className="contact-footer"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
           <div className="contact-info-item">
             <Mail size={16} /> hello@pathway.edu
           </div>
           <div className="contact-info-item">
             <MessageCircle size={16} /> Live Chat Available
           </div>
-        </div>
+        </motion.div>
       </div>
 
       <style>{`

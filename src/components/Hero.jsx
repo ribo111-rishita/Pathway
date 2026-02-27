@@ -1,6 +1,7 @@
 import React from 'react';
 import { Play, Info, ChevronDown } from 'lucide-react';
 import { Link } from 'react-scroll';
+import { motion } from 'framer-motion';
 
 const Hero = () => {
   return (
@@ -18,20 +19,40 @@ const Hero = () => {
 
 
       <div className="hero-content">
-        <div className="badge">
+        <motion.div
+          className="badge"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <span className="badge-icon">✧</span>
           THE FUTURE OF EDUCATION
-        </div>
+        </motion.div>
 
-        <h1 className="hero-title">
+        <motion.h1
+          className="hero-title"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           Stop Learning<br />Blind.
-        </h1>
+        </motion.h1>
 
-        <p className="hero-subtitle">
+        <motion.p
+          className="hero-subtitle"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
           Structured learning paths so you always know what to learn<br />next. No more guessing. Just progress.
-        </p>
+        </motion.p>
 
-        <div className="hero-actions">
+        <motion.div
+          className="hero-actions"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
           <Link to="pricing" smooth={true} duration={500} offset={-80} className="btn btn-primary btn-lg" style={{ cursor: 'pointer', display: 'inline-flex' }}>
             <Play size={18} fill="currentColor" className="btn-icon" />
             Start Your Path
@@ -41,7 +62,7 @@ const Hero = () => {
             <Info size={18} className="btn-icon" />
             Explore Paths
           </Link>
-        </div>
+        </motion.div>
       </div>
 
       <div className="scroll-indicator">

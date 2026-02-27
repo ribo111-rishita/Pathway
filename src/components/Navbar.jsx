@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
+import { motion } from 'framer-motion';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -13,7 +14,12 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ type: 'spring', stiffness: 120, damping: 20 }}
+      className={`navbar ${scrolled ? 'scrolled' : ''}`}
+    >
       <div className="nav-container">
         <div className="nav-left">
           <Link to="hero" smooth={true} duration={500} className="logo" style={{ cursor: 'pointer' }}>
@@ -105,7 +111,7 @@ const Navbar = () => {
           font-weight: 600;
         }
       `}</style>
-    </nav>
+    </motion.nav>
   );
 };
 

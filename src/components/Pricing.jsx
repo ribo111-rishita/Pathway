@@ -1,20 +1,33 @@
 import React from 'react';
 import { Check, Info } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Pricing = () => {
   return (
     <section id="pricing" className="pricing-section">
       <div className="container">
-        <div className="section-header">
+        <motion.div
+          className="section-header"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="section-title">Simple, Transparent Pricing</h2>
           <p className="section-subtitle">
             Choose the plan that fits your learning goals. No hidden fees, cancel anytime.
           </p>
-        </div>
+        </motion.div>
 
         <div className="pricing-grid">
           {/* Free Tier */}
-          <div className="pricing-card">
+          <motion.div
+            className="pricing-card"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
             <div className="card-header">
               <span className="tier-name">FREE</span>
               <h3 className="tier-price">Free</h3>
@@ -36,10 +49,16 @@ const Pricing = () => {
             </ul>
 
             <button className="btn btn-tier btn-ghost-bg">Get Started &rarr;</button>
-          </div>
+          </motion.div>
 
           {/* Pro Tier (Highlighted) */}
-          <div className="pricing-card pro">
+          <motion.div
+            className="pricing-card pro"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <div className="recommended-badge">RECOMMENDED</div>
             <div className="card-header">
               <span className="tier-name pro-name">PRO</span>
@@ -64,10 +83,16 @@ const Pricing = () => {
             </ul>
 
             <button className="btn btn-tier btn-primary">Get Started &rarr;</button>
-          </div>
+          </motion.div>
 
           {/* Institutional Tier */}
-          <div className="pricing-card">
+          <motion.div
+            className="pricing-card"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
             <div className="card-header">
               <span className="tier-name">INSTITUTION</span>
               <h3 className="tier-price">Custom</h3>
@@ -84,7 +109,7 @@ const Pricing = () => {
             </ul>
 
             <button className="btn btn-tier btn-ghost-bg">Contact Sales &rarr;</button>
-          </div>
+          </motion.div>
         </div>
       </div>
 
