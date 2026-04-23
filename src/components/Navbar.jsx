@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-scroll';
+import { Link as ScrollLink } from 'react-scroll';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleHomeClick = () => {
+    if (location.pathname !== '/') {
+      navigate('/');
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,14 +31,23 @@ const Navbar = () => {
     >
       <div className="nav-container">
         <div className="nav-left">
-          <Link to="hero" smooth={true} duration={500} className="logo" style={{ cursor: 'pointer' }}>
-            PATHWAY
-          </Link>
+          <div onClick={handleHomeClick} style={{ cursor: 'pointer' }}>
+            <ScrollLink to="hero" smooth={true} duration={500} className="logo" onClick={() => { if(location.pathname !== '/') navigate('/'); }}>
+              PATHWAY
+            </ScrollLink>
+          </div>
           <div className="nav-links">
-            <Link to="hero" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Home</Link>
-            <Link to="features" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Features</Link>
-            <Link to="how-it-works" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">How it Works</Link>
-            <Link to="pricing" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Pricing</Link>
+            {location.pathname === '/' ? (
+              <>
+                <ScrollLink to="hero" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Home</ScrollLink>
+                <ScrollLink to="features" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Features</ScrollLink>
+                <ScrollLink to="how-it-works" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">How it Works</ScrollLink>
+                <ScrollLink to="pricing" spy={true} smooth={true} duration={500} offset={-80} className="nav-link" activeClass="active">Pricing</ScrollLink>
+              </>
+            ) : (
+              <RouterLink to="/" className="nav-link">Home</RouterLink>
+            )}
+            <RouterLink to="/dashboard" className="nav-link" style={{ color: '#60a5fa', fontWeight: '600' }}>Dashboard</RouterLink>
           </div>
         </div>
         <div className="nav-right">
