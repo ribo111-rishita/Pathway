@@ -53,10 +53,10 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <button className="btn btn-primary btn-lg" style={{ display: 'inline-flex' }}>
+          <Link to="how-it-works" smooth={true} duration={500} offset={-80} className="btn btn-primary btn-lg" style={{ cursor: 'pointer', display: 'inline-flex' }}>
             <Play size={18} fill="currentColor" className="btn-icon" />
             Start Your Free Path
-          </button>
+          </Link>
 
           <Link to="how-it-works" smooth={true} duration={500} offset={-80} className="btn btn-glass btn-lg" style={{ cursor: 'pointer', display: 'inline-flex' }}>
             <Info size={18} className="btn-icon" />
