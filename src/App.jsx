@@ -11,14 +11,6 @@ import DashboardPreview from './components/DashboardPreview';
 import GeneratePath from './components/GeneratePath';
 import Dashboard from './components/Dashboard';
 
-import CareerOutcomes from './components/CareerOutcomes';
-import ComparePaths from './components/ComparePaths';
-import TimeSelector from './components/TimeSelector';
-import SkillsProgress from './components/SkillsProgress';
-import WeeklyPlan from './components/WeeklyPlan';
-import Achievements from './components/Achievements';
-import ActivityToasts from './components/ActivityToasts';
-
 function LandingPage() {
   return (
     <div className="landing-content">
@@ -29,17 +21,7 @@ function LandingPage() {
       <HowItWorks />
       <Testimonials />
       <Pricing />
-      
-      {/* Newly Added SaaS Extension Sections */}
-      <CareerOutcomes />
-      <ComparePaths />
-      <TimeSelector />
-      <SkillsProgress />
-      <WeeklyPlan />
-      <Achievements />
-      
       <Contact />
-      <ActivityToasts />
     </div>
   );
 }
