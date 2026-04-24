@@ -26,7 +26,7 @@ const Pricing = () => {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ delay: 0.1, type: 'spring', stiffness: 120, damping: 14 }}
           >
             <div className="card-header">
               <span className="tier-name">FREE</span>
@@ -57,7 +57,7 @@ const Pricing = () => {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 120, damping: 14 }}
           >
             <div className="recommended-badge">RECOMMENDED</div>
             <div className="card-header">
@@ -91,7 +91,7 @@ const Pricing = () => {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            transition={{ delay: 0.3, type: 'spring', stiffness: 120, damping: 14 }}
           >
             <div className="card-header">
               <span className="tier-name">INSTITUTION</span>

@@ -37,7 +37,7 @@ const WeeklyPlan = () => {
               key={i}
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.15 }}
+              transition={{ delay: i * 0.15, type: 'spring', stiffness: 100, damping: 12 }}
               className="timeline-item" style={{ position: 'relative', marginBottom: '40px' }}
             >
               <div style={{ 

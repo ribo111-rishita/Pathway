@@ -37,7 +37,7 @@ const SkillsProgress = () => {
                   <motion.div 
                     initial={{ width: 0 }}
                     whileInView={{ width: skill.percent + '%' }}
-                    transition={{ duration: 1.5, delay: 0.2 + (i * 0.2), ease: 'easeOut' }}
+                    transition={{ duration: 1.5, delay: 0.2 + (i * 0.2), ease: [0.4, 0, 0.2, 1] }}
                     style={{ height: '100%', background: skill.color, borderRadius: '10px' }}
                   ></motion.div>
                 </div>

@@ -52,7 +52,7 @@ const ComparePaths = () => {
               key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.15 }}
+              transition={{ delay: i * 0.15, type: 'spring', stiffness: 120, damping: 14 }}
               className={`compare-card glass-card ${path.recommended ? 'glow-accent' : ''}`}
             >
               {path.recommended && (

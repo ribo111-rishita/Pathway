@@ -45,7 +45,7 @@ const Features = () => {
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+                            transition={{ delay: 0.15 * index, type: 'spring', stiffness: 120, damping: 14 }}
                         >
                             <div className="feature-icon-wrapper">
                                 {card.icon}
@@ -80,7 +80,8 @@ const Features = () => {
         }
 
         .feature-card:hover {
-          transform: translateY(-8px);
+          transform: scale(1.03) translateY(-8px);
+          filter: brightness(1.1);
           background-color: var(--bg-card-hover);
           border-color: rgba(59, 130, 246, 0.3);
         }

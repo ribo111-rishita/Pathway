@@ -40,7 +40,8 @@ body {
 }
 
 .glass-card:hover {
-  transform: translateY(-4px);
+  transform: scale(1.03) translateY(-4px);
+  filter: brightness(1.1);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
   border-color: rgba(255, 255, 255, 0.15);
 }

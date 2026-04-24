@@ -27,8 +27,8 @@ const Achievements = () => {
               key={badge.id}
               initial={{ scale: 0.8, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
-              whileHover={{ y: -8 }}
-              transition={{ delay: i * 0.1, type: 'spring' }}
+              whileHover={{ scale: 1.05, y: -8 }}
+              transition={{ delay: i * 0.1, type: 'spring', stiffness: 150, damping: 10 }}
               className="badge-wrapper glass-card-subtle glow-accent"
               style={{ width: '240px', padding: '32px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
             >

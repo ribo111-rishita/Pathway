@@ -52,7 +52,7 @@ const CareerOutcomes = () => {
               key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.1, type: 'spring', stiffness: 120, damping: 14 }}
               className="outcome-card glass-card hover-glow"
             >
               <div className="icon-wrap" style={{ 

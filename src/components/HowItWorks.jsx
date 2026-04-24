@@ -158,7 +158,7 @@ const HowItWorks = () => {
                             key={goalKey}
                             className={`goal-card ${selectedGoal === goalKey ? 'active' : ''}`}
                             onClick={() => setSelectedGoal(goalKey)}
-                            whileHover={{ y: -5, scale: 1.02 }}
+                            whileHover={{ y: -5, scale: 1.04, filter: 'brightness(1.1)' }}
                             whileTap={{ scale: 0.98 }}
                         >
                             <div className="goal-icon-wrapper">
