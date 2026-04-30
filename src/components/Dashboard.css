@@ -197,10 +197,10 @@ body {
 .dash-main {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 40px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 20px;
 }
 
 /* Welcome Section */
@@ -286,11 +286,11 @@ body {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 16px;
 }
 
 .stat-card {
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -362,24 +362,24 @@ body {
 .dashboard-content-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 24px;
+  gap: 16px;
 }
 
 .content-left {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
 }
 
 .content-right {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
 }
 
 /* Continue Learning Card */
 .continue-card {
-  padding: 32px;
+  padding: 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -470,7 +470,7 @@ body {
 
 /* Roadmap Section */
 .roadmap-section, .activity-section, .achievements-section {
-  padding: 32px;
+  padding: 24px;
 }
 
 .section-head {
