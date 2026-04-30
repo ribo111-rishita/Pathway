@@ -8,94 +8,169 @@ import StatCard from './StatCard';
 import LearningPathTracker from './LearningPathTracker';
 import ActivityHeatmap from './ActivityHeatmap';
 
-// Initial Dummy Data
-const initialCourseData = [
-  { id: 1, label: 'Basics', status: 'completed', lessons: 5, completedLessons: 5 },
-  { id: 2, label: 'Color', status: 'completed', lessons: 4, completedLessons: 4 },
-  { id: 3, label: 'Wireframes', status: 'active', lessons: 6, completedLessons: 2 },
-  { id: 4, label: 'Prototypes', status: 'locked', lessons: 8, completedLessons: 0 },
-  { id: 5, label: 'Portfolio', status: 'locked', lessons: 3, completedLessons: 0 }
-];
+// 1. Explicit Course Data Structure
+const COURSE_STRUCTURE = {
+  id: 'course_1',
+  title: 'UI/UX Design Mastery',
+  modules: [
+    {
+      id: 'mod_1',
+      title: 'Basics',
+      lessons: [
+        { id: 'l_1', title: 'Introduction to UI/UX', durationMins: 15 },
+        { id: 'l_2', title: 'Design Thinking', durationMins: 20 },
+        { id: 'l_3', title: 'User Research', durationMins: 30 }
+      ]
+    },
+    {
+      id: 'mod_2',
+      title: 'Color',
+      lessons: [
+        { id: 'l_4', title: 'Color Theory', durationMins: 25 },
+        { id: 'l_5', title: 'Creating Palettes', durationMins: 20 }
+      ]
+    },
+    {
+      id: 'mod_3',
+      title: 'Wireframes',
+      lessons: [
+        { id: 'l_6', title: 'Low Fidelity', durationMins: 40 },
+        { id: 'l_7', title: 'High Fidelity', durationMins: 45 },
+        { id: 'l_8', title: 'Auto Layout Basics', durationMins: 30 }
+      ]
+    },
+    {
+      id: 'mod_4',
+      title: 'Prototypes',
+      lessons: [
+        { id: 'l_9', title: 'Micro-interactions', durationMins: 30 },
+        { id: 'l_10', title: 'Complex Flows', durationMins: 50 }
+      ]
+    }
+  ]
+};
 
-const initialActivityData = Array.from({ length: 15 * 7 }).map(() => ({
-  isActive: Math.random() > 0.5,
-  intensity: Math.floor(Math.random() * 4) + 1
-}));
+// Generate some dummy initial activity data based on real dates
+const generateDummyActivity = () => {
+  const data = {};
+  const today = new Date();
+  for (let i = 0; i < 40; i++) {
+    const randomDate = new Date(today);
+    randomDate.setDate(today.getDate() - Math.floor(Math.random() * 100));
+    const dateKey = randomDate.toISOString().split('T')[0];
+    data[dateKey] = Math.floor(Math.random() * 4) + 1; // Intensity 1-4
+  }
+  return data;
+};
 
 const Dashboard = () => {
-  // State Initialization with localStorage fallback
-  const [courseData, setCourseData] = useState(() => {
-    const saved = localStorage.getItem('pathway_course_data');
-    return saved ? JSON.parse(saved) : initialCourseData;
+  // 2. Explicit State Variables with localStorage hydration
+  
+  const [completedLessons, setCompletedLessons] = useState(() => {
+    const saved = localStorage.getItem('pathway_completed_lessons');
+    // Fallback: assume mod_1 and mod_2 are fully completed initially
+    return saved ? JSON.parse(saved) : ['l_1', 'l_2', 'l_3', 'l_4', 'l_5', 'l_6'];
   });
 
-  const [userStats, setUserStats] = useState(() => {
-    const saved = localStorage.getItem('pathway_user_stats');
-    return saved ? JSON.parse(saved) : { streak: 4, hoursLearned: 12, dailyGoal: '1h' };
+  const [currentLesson, setCurrentLesson] = useState(() => {
+    const saved = localStorage.getItem('pathway_current_lesson');
+    return saved ? JSON.parse(saved) : { moduleId: 'mod_3', lessonId: 'l_7' };
+  });
+
+  const [streak, setStreak] = useState(() => {
+    const saved = localStorage.getItem('pathway_streak');
+    return saved ? parseInt(saved, 10) : 4;
+  });
+
+  const [totalHoursLearned, setTotalHoursLearned] = useState(() => {
+    const saved = localStorage.getItem('pathway_total_hours');
+    return saved ? parseFloat(saved) : 12.5;
   });
 
   const [activityData, setActivityData] = useState(() => {
     const saved = localStorage.getItem('pathway_activity_data');
-    return saved ? JSON.parse(saved) : initialActivityData;
+    return saved ? JSON.parse(saved) : generateDummyActivity();
   });
 
-  // Save to localStorage whenever state changes
+  // Persist State Changes
   useEffect(() => {
-    localStorage.setItem('pathway_course_data', JSON.stringify(courseData));
-  }, [courseData]);
-
-  useEffect(() => {
-    localStorage.setItem('pathway_user_stats', JSON.stringify(userStats));
-  }, [userStats]);
-
-  useEffect(() => {
+    localStorage.setItem('pathway_completed_lessons', JSON.stringify(completedLessons));
+    localStorage.setItem('pathway_current_lesson', JSON.stringify(currentLesson));
+    localStorage.setItem('pathway_streak', streak.toString());
+    localStorage.setItem('pathway_total_hours', totalHoursLearned.toString());
     localStorage.setItem('pathway_activity_data', JSON.stringify(activityData));
-  }, [activityData]);
+  }, [completedLessons, currentLesson, streak, totalHoursLearned, activityData]);
 
-  // Derived State Calculations
-  const totalLessons = courseData.reduce((acc, mod) => acc + mod.lessons, 0);
-  const totalCompleted = courseData.reduce((acc, mod) => acc + mod.completedLessons, 0);
-  const courseProgressPercentage = Math.round((totalCompleted / totalLessons) * 100);
+  // 3. Dynamic Progress Calculations
   
-  const completedModulesCount = courseData.filter(m => m.status === 'completed').length;
-  const activeModule = courseData.find(m => m.status === 'active') || courseData[courseData.length - 1];
+  // Overall Progress
+  const totalLessonsInCourse = COURSE_STRUCTURE.modules.reduce((acc, mod) => acc + mod.lessons.length, 0);
+  const courseProgressPercentage = Math.round((completedLessons.length / totalLessonsInCourse) * 100);
 
-  const currentModuleProgress = Math.round((activeModule.completedLessons / activeModule.lessons) * 100);
-  const lessonsLeftInModule = activeModule.lessons - activeModule.completedLessons;
+  // Active Module Calculations
+  const activeModule = COURSE_STRUCTURE.modules.find(m => m.id === currentLesson.moduleId);
+  const activeLesson = activeModule?.lessons.find(l => l.id === currentLesson.lessonId);
+  
+  const completedLessonsInActiveModule = activeModule ? activeModule.lessons.filter(l => completedLessons.includes(l.id)).length : 0;
+  const currentModuleProgress = activeModule ? Math.round((completedLessonsInActiveModule / activeModule.lessons.length) * 100) : 100;
+  
+  const lessonsLeftInModule = activeModule ? activeModule.lessons.length - completedLessonsInActiveModule : 0;
+  const timeRemainingInModule = activeModule ? activeModule.lessons.filter(l => !completedLessons.includes(l.id)).reduce((acc, l) => acc + l.durationMins, 0) : 0;
+
+  // Path Tracker Data
+  const pathSteps = COURSE_STRUCTURE.modules.map(mod => {
+    const isCompleted = mod.lessons.every(l => completedLessons.includes(l.id));
+    const isActive = mod.id === currentLesson.moduleId;
+    return {
+      id: mod.id,
+      label: mod.title,
+      status: isCompleted ? 'completed' : isActive ? 'active' : 'locked'
+    };
+  });
+
+  const completedModulesCount = pathSteps.filter(step => step.status === 'completed').length;
 
   // Handlers
   const handleResumeLearning = () => {
-    // Simulate completing a lesson
-    setCourseData(prevData => {
-      let isUpgradingModule = false;
-      
-      const newData = prevData.map(mod => {
-        if (mod.id === activeModule.id) {
-          const newCompleted = mod.completedLessons + 1;
-          if (newCompleted >= mod.lessons) {
-            isUpgradingModule = true;
-            return { ...mod, completedLessons: mod.lessons, status: 'completed' };
-          }
-          return { ...mod, completedLessons: newCompleted };
-        }
-        return mod;
-      });
+    if (!activeModule || !activeLesson) return; // Course complete
 
-      // If we finished a module, unlock the next one
-      if (isUpgradingModule) {
-        const nextLockedIndex = newData.findIndex(mod => mod.status === 'locked');
-        if (nextLockedIndex !== -1) {
-          newData[nextLockedIndex].status = 'active';
-        }
+    // 1. Mark lesson as complete
+    const newCompletedLessons = [...completedLessons, activeLesson.id];
+    setCompletedLessons(newCompletedLessons);
+
+    // 2. Find next lesson
+    let nextLessonId = null;
+    let nextModuleId = activeModule.id;
+    
+    const currentIndex = activeModule.lessons.findIndex(l => l.id === activeLesson.id);
+    if (currentIndex + 1 < activeModule.lessons.length) {
+      // Next lesson in same module
+      nextLessonId = activeModule.lessons[currentIndex + 1].id;
+    } else {
+      // Next module
+      const currentModIndex = COURSE_STRUCTURE.modules.findIndex(m => m.id === activeModule.id);
+      if (currentModIndex + 1 < COURSE_STRUCTURE.modules.length) {
+        const nextMod = COURSE_STRUCTURE.modules[currentModIndex + 1];
+        nextModuleId = nextMod.id;
+        nextLessonId = nextMod.lessons[0].id;
       }
+    }
 
-      return newData;
-    });
+    if (nextLessonId) {
+      setCurrentLesson({ moduleId: nextModuleId, lessonId: nextLessonId });
+    } else {
+      // Course finished
+      setCurrentLesson({ moduleId: 'done', lessonId: 'done' });
+    }
 
-    // Artificially boost stats
-    setUserStats(prev => ({
+    // 3. Update stats
+    setTotalHoursLearned(prev => prev + (activeLesson.durationMins / 60));
+    
+    // 4. Update Activity (record today)
+    const todayStr = new Date().toISOString().split('T')[0];
+    setActivityData(prev => ({
       ...prev,
-      hoursLearned: prev.hoursLearned + 0.5
+      [todayStr]: Math.min((prev[todayStr] || 0) + 1, 4) // Max intensity 4
     }));
   };
 
@@ -111,7 +186,7 @@ const Dashboard = () => {
     {
       icon: BookOpen,
       label: "Modules Completed",
-      value: `${completedModulesCount} / ${courseData.length}`,
+      value: `${completedModulesCount} / ${COURSE_STRUCTURE.modules.length}`,
       trend: "flat",
       trendLabel: "On track",
       colorTheme: "purple"
@@ -119,7 +194,7 @@ const Dashboard = () => {
     {
       icon: Flame,
       label: "Current Streak",
-      value: `${userStats.streak} Days`,
+      value: `${streak} Days`,
       trend: "down",
       trendLabel: "Needs 1h",
       colorTheme: "orange"
@@ -132,22 +207,31 @@ const Dashboard = () => {
         
         <DashboardHeader 
           userName="User" 
-          streak={userStats.streak} 
-          hoursLearned={userStats.hoursLearned} 
-          dailyGoal={userStats.dailyGoal} 
+          streak={streak} 
+          hoursLearned={Math.round(totalHoursLearned)} 
+          dailyGoal="1h" 
         />
 
         <div className="dash-grid-12">
           
-          <ResumeLearningCard 
-            moduleNumber={activeModule.id}
-            progress={currentModuleProgress}
-            title={`${activeModule.label} Mastery`}
-            description={`Pick up where you left off in ${activeModule.label}. Master the required skills to unlock the next step.`}
-            timeRemaining={lessonsLeftInModule * 20}
-            lessonsLeft={lessonsLeftInModule}
-            onComplete={handleResumeLearning}
-          />
+          {activeModule && activeLesson ? (
+            <ResumeLearningCard 
+              moduleNumber={COURSE_STRUCTURE.modules.findIndex(m => m.id === activeModule.id) + 1}
+              progress={currentModuleProgress}
+              title={activeLesson.title}
+              description={`Continue with module ${activeModule.title}. Master the required skills to unlock the next step.`}
+              timeRemaining={timeRemainingInModule}
+              lessonsLeft={lessonsLeftInModule}
+              onComplete={handleResumeLearning}
+            />
+          ) : (
+             <div className="grid-card col-span-8 primary-card">
+              <div className="primary-content" style={{ justifyContent: 'center', alignItems: 'center' }}>
+                 <h2>Course Completed! 🎉</h2>
+                 <p>You have finished all modules in {COURSE_STRUCTURE.title}.</p>
+              </div>
+             </div>
+          )}
 
           <div className="grid-card col-span-4 stacked-stats">
             {statsData.map((stat, idx) => (
@@ -158,9 +242,9 @@ const Dashboard = () => {
             ))}
           </div>
 
-          <LearningPathTracker steps={courseData} />
+          <LearningPathTracker steps={pathSteps} />
 
-          <ActivityHeatmap totalHours={userStats.hoursLearned} data={activityData} />
+          <ActivityHeatmap totalHours={totalHoursLearned} activityData={activityData} />
 
           <div className="grid-card col-span-12 tertiary-card flex-row-card">
             <div className="flex-card-left">
