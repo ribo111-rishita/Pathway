@@ -6,7 +6,7 @@ import './Dashboard.css';
 
 const Dashboard = () => {
   return (
-    <div className="dashboard-container" style={{paddingTop: '80px'}}>
+    <div className="dashboard-container">
       <main className="dash-main-dense">
         
         {/* Compact Header */}

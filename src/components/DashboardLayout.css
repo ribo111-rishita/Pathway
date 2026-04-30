@@ -1,0 +1,11 @@
+.dashboard-app-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #04060d;
+}
+
+.dashboard-main-content {
+  flex: 1;
+  overflow-x: hidden;
+  position: relative;
+}

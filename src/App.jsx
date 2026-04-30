@@ -19,9 +19,12 @@ import WeeklyPlan from './components/WeeklyPlan';
 import Achievements from './components/Achievements';
 import ActivityToasts from './components/ActivityToasts';
 
+import DashboardLayout from './components/DashboardLayout';
+
 function LandingPage() {
   return (
     <div className="landing-content">
+      <Navbar />
       <Hero />
       <DashboardPreview />
       <GeneratePath />
@@ -48,10 +51,13 @@ function App() {
   return (
     <Router>
       <div className="app-container">
-        <Navbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={
+            <DashboardLayout>
+              <Dashboard />
+            </DashboardLayout>
+          } />
         </Routes>
       </div>
     </Router>
