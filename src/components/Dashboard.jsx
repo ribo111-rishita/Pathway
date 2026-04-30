@@ -174,6 +174,20 @@ const Dashboard = () => {
     }));
   };
 
+  const handleStepClick = (step) => {
+    const clickedModule = COURSE_STRUCTURE.modules.find(m => m.id === step.id);
+    if (!clickedModule) return;
+
+    // Find first uncompleted lesson in the module, or default to the first lesson
+    const firstUncompleted = clickedModule.lessons.find(l => !completedLessons.includes(l.id));
+    const lessonToLoad = firstUncompleted || clickedModule.lessons[0];
+
+    setCurrentLesson({
+      moduleId: clickedModule.id,
+      lessonId: lessonToLoad.id
+    });
+  };
+
   const statsData = [
     {
       icon: TrendingUp,
@@ -242,7 +256,7 @@ const Dashboard = () => {
             ))}
           </div>
 
-          <LearningPathTracker steps={pathSteps} />
+          <LearningPathTracker steps={pathSteps} onStepClick={handleStepClick} />
 
           <ActivityHeatmap totalHours={totalHoursLearned} activityData={activityData} />
 

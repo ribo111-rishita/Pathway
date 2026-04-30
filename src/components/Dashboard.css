@@ -203,6 +203,11 @@
   transform: translateY(-1px);
 }
 
+.btn-vibrant:active {
+  transform: translateY(1px) scale(0.96);
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4);
+}
+
 .action-meta {
   display: flex;
   gap: 16px;
@@ -230,6 +235,7 @@
   background: #3b82f6;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Stacked Stats */
@@ -515,6 +521,84 @@
   0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
   70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
   100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+/* Tooltip Styles */
+.custom-tooltip-wrapper {
+  position: relative;
+  display: flex;
+}
+
+.custom-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  background: #1e293b;
+  color: #f8fafc;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+  z-index: 50;
+}
+
+.heat-cell-sm:hover .custom-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Filter Tabs */
+.filter-tabs {
+  display: flex;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 8px;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.filter-tab {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-tab:hover {
+  color: #94a3b8;
+}
+
+.filter-tab.active {
+  background: #1e293b;
+  color: #f8fafc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Clickable Steps */
+.step-hz.clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.step-hz.clickable:hover {
+  transform: translateY(-2px);
+}
+
+.step-hz.clickable:hover .hz-label {
+  color: #f8fafc;
 }
 
 /* Responsive */

@@ -1,5 +1,5 @@
-import React from 'react';
-import { PlayCircle, Clock, BookOpen } from 'lucide-react';
+import React, { useState } from 'react';
+import { PlayCircle, Clock, BookOpen, Loader2 } from 'lucide-react';
 
 const ResumeLearningCard = ({ 
   moduleNumber, 
@@ -10,6 +10,17 @@ const ResumeLearningCard = ({
   lessonsLeft,
   onComplete
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleResumeClick = () => {
+    setIsLoading(true);
+    // Simulate network request or content loading
+    setTimeout(() => {
+      onComplete();
+      setIsLoading(false);
+    }, 600);
+  };
+
   return (
     <div className="grid-card col-span-8 primary-card">
       <div className="card-layer-bg"></div>
@@ -24,9 +35,13 @@ const ResumeLearningCard = ({
         </div>
         
         <div className="primary-actions">
-          <button className="btn-vibrant" onClick={onComplete}>
-            <PlayCircle size={20} className="fill-icon" />
-            Resume Learning
+          <button className="btn-vibrant" onClick={handleResumeClick} disabled={isLoading}>
+            {isLoading ? (
+              <Loader2 size={20} className="animate-spin" />
+            ) : (
+              <PlayCircle size={20} className="fill-icon" />
+            )}
+            {isLoading ? 'Loading Lesson...' : 'Resume Learning'}
           </button>
           <div className="action-meta">
             <div className="meta-item"><Clock size={14}/> <span>{timeRemaining} mins remaining</span></div>
