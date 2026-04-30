@@ -7,7 +7,8 @@ const ResumeLearningCard = ({
   title, 
   description, 
   timeRemaining, 
-  lessonsLeft 
+  lessonsLeft,
+  onComplete
 }) => {
   return (
     <div className="grid-card col-span-8 primary-card">
@@ -23,7 +24,7 @@ const ResumeLearningCard = ({
         </div>
         
         <div className="primary-actions">
-          <button className="btn-vibrant">
+          <button className="btn-vibrant" onClick={onComplete}>
             <PlayCircle size={20} className="fill-icon" />
             Resume Learning
           </button>

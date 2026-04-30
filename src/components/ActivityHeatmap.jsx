@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ActivityHeatmap = ({ totalHours, weeks = 15 }) => {
+const ActivityHeatmap = ({ totalHours, data, weeks = 15 }) => {
   return (
     <div className="grid-card col-span-5 secondary-card">
       <div className="card-header-flex">
@@ -15,9 +15,11 @@ const ActivityHeatmap = ({ totalHours, weeks = 15 }) => {
           {Array.from({ length: weeks }).map((_, col) => (
             <div className="heat-col" key={col}>
               {Array.from({ length: 7 }).map((_, row) => {
-                const isActive = Math.random() > 0.5;
-                const intensity = Math.floor(Math.random() * 4) + 1;
+                const cellIndex = col * 7 + row;
+                const cellData = data?.[cellIndex] || { isActive: false, intensity: 0 };
+                const { isActive, intensity } = cellData;
                 const hours = isActive ? (intensity * 1.5).toFixed(1) : 0;
+                
                 return (
                   <div 
                     key={row} 
