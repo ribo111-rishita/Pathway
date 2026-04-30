@@ -15,7 +15,8 @@ import {
   Map,
   TrendingUp,
   User,
-  Activity
+  Activity,
+  Target
 } from 'lucide-react';
 import './Dashboard.css';
 
@@ -30,11 +31,17 @@ const Dashboard = () => {
             <h1>Welcome back, User 👋</h1>
             <p>Continue your journey to mastering UI/UX Design</p>
           </div>
-          <div className="streak-badge glass-card-subtle">
-            <Flame className="streak-icon" size={24} />
-            <div className="streak-info">
-              <span className="streak-count">4-Day Streak</span>
-              <span className="streak-sub">Keep it up!</span>
+          <div className="welcome-actions">
+            <button className="quick-action-btn glass-card-subtle">
+              <Target size={18} className="text-blue" />
+              <span>Daily Goal</span>
+            </button>
+            <div className="streak-badge glass-card-subtle">
+              <Flame className="streak-icon" size={24} />
+              <div className="streak-info">
+                <span className="streak-count">4-Day Streak</span>
+                <span className="streak-sub">Keep it up!</span>
+              </div>
             </div>
           </div>
         </section>
@@ -50,6 +57,9 @@ const Dashboard = () => {
             <div className="progress-bar-bg">
               <div className="progress-bar-fill slide-in" style={{ width: '65%' }}></div>
             </div>
+            <div className="stat-trend positive">
+              <TrendingUp size={14} /> <span>+5% this week</span>
+            </div>
           </div>
 
           <div className="stat-card glass-card">
@@ -58,7 +68,9 @@ const Dashboard = () => {
               <BookOpen className="stat-icon text-purple" size={20} />
             </div>
             <div className="stat-value">5<span className="stat-total">/8</span></div>
-            <div className="stat-desc">2 this week</div>
+            <div className="stat-trend neutral">
+              <CheckCircle2 size={14} /> <span>On track with goals</span>
+            </div>
           </div>
 
           <div className="stat-card glass-card">
@@ -67,7 +79,9 @@ const Dashboard = () => {
               <Clock className="stat-icon text-green" size={20} />
             </div>
             <div className="stat-value">12h</div>
-            <div className="stat-desc">+2.5h this week</div>
+            <div className="stat-trend positive">
+              <TrendingUp size={14} /> <span>Top 10% of learners</span>
+            </div>
           </div>
 
           <div className="stat-card glass-card">
@@ -76,7 +90,9 @@ const Dashboard = () => {
               <Flame className="stat-icon text-orange" size={20} />
             </div>
             <div className="stat-value">4 days</div>
-            <div className="stat-desc">Personal best: 14</div>
+            <div className="stat-trend warning">
+              <Flame size={14} /> <span>Needs 1h to extend</span>
+            </div>
           </div>
         </section>
 
@@ -88,9 +104,20 @@ const Dashboard = () => {
                 <span className="continue-label">UP NEXT</span>
                 <h3>Wireframing Basics</h3>
                 <p>Pick up where you left off. Learn how to map out user flows effectively.</p>
+                
+                <div className="module-progress">
+                  <div className="module-progress-info">
+                    <span>Module 6 Progress</span>
+                    <span>30%</span>
+                  </div>
+                  <div className="progress-bar-bg">
+                    <div className="progress-bar-fill slide-in" style={{ width: '30%' }}></div>
+                  </div>
+                </div>
+
                 <div className="continue-meta">
-                  <span><Clock size={14}/> 45 mins</span>
-                  <span><BookOpen size={14}/> 3 lessons</span>
+                  <span><Clock size={14}/> 45 mins remaining</span>
+                  <span><BookOpen size={14}/> 2 lessons left</span>
                 </div>
               </div>
               <button className="resume-btn">
@@ -126,7 +153,10 @@ const Dashboard = () => {
                 <div className="step active">
                   <div className="step-icon step-pulse"><Circle size={24} /></div>
                   <div className="step-content">
-                    <h4>Wireframing Basics</h4>
+                    <div className="step-header">
+                      <h4>Wireframing Basics</h4>
+                      <span className="current-badge">CURRENT</span>
+                    </div>
                     <p>Layouts, spacing, and structural design</p>
                     <div className="step-progress-mini">
                       <div className="step-progress-fill" style={{width: '30%'}}></div>
@@ -162,22 +192,31 @@ const Dashboard = () => {
                 <h3>Learning Activity</h3>
                 <span className="activity-total">42 hours</span>
               </div>
-              <div className="heatmap-container">
-                {/* Simulated Heatmap Grid */}
-                {Array.from({ length: 7 }).map((_, colIndex) => (
-                  <div className="heatmap-col" key={colIndex}>
-                    {Array.from({ length: 5 }).map((_, rowIndex) => {
-                      const isActive = Math.random() > 0.6;
-                      const intensity = Math.floor(Math.random() * 4) + 1;
-                      return (
-                        <div 
-                          key={rowIndex} 
-                          className={`heat-cell ${isActive ? 'heat-level-' + intensity : 'heat-empty'}`}
-                        ></div>
-                      );
-                    })}
-                  </div>
-                ))}
+              <div className="heatmap-wrapper">
+                <div className="heatmap-y-axis">
+                  <span>Mon</span>
+                  <span>Wed</span>
+                  <span>Fri</span>
+                </div>
+                <div className="heatmap-container">
+                  {/* Simulated Heatmap Grid */}
+                  {Array.from({ length: 14 }).map((_, colIndex) => (
+                    <div className="heatmap-col" key={colIndex}>
+                      {Array.from({ length: 7 }).map((_, rowIndex) => {
+                        const isActive = Math.random() > 0.6;
+                        const intensity = Math.floor(Math.random() * 4) + 1;
+                        const hours = isActive ? (intensity * 1.5).toFixed(1) : 0;
+                        return (
+                          <div 
+                            key={rowIndex} 
+                            className={`heat-cell ${isActive ? 'heat-level-' + intensity : 'heat-empty'}`}
+                            title={isActive ? `${hours} hours learned` : 'No activity'}
+                          ></div>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="heatmap-legend">
                 <span>Less</span>

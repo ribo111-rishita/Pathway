@@ -225,6 +225,34 @@ body {
   font-size: 16px;
 }
 
+.welcome-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.quick-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: var(--text-main);
+  border-radius: var(--radius-xl);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-action-btn:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
 .streak-badge {
   display: flex;
   align-items: center;
@@ -298,9 +326,21 @@ body {
   font-weight: 500;
 }
 
-.stat-desc {
+.stat-trend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.stat-trend.positive { color: #10b981; }
+.stat-trend.neutral { color: var(--text-muted-dash); }
+.stat-trend.warning { color: #f97316; }
+
+.stat-trend span {
+  opacity: 0.9;
 }
 
 .progress-bar-bg {
@@ -368,6 +408,30 @@ body {
 .continue-content p {
   color: var(--text-muted-dash);
   font-size: 15px;
+}
+
+.module-progress {
+  width: 100%;
+  margin: 16px 0;
+}
+
+.module-progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-muted-dash);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.module-progress .progress-bar-bg {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.module-progress .progress-bar-fill {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.5);
 }
 
 .continue-meta {
@@ -497,6 +561,32 @@ body {
   flex: 1;
 }
 
+.step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.current-badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--blue-glow);
+  background: rgba(59, 130, 246, 0.15);
+  padding: 4px 8px;
+  border-radius: 100px;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.step.active .step-content {
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.05) 0%, transparent 100%);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border-left: 2px solid var(--blue-primary);
+  margin-top: -12px;
+}
+
 .step-content h4 {
   font-size: 16px;
   font-weight: 600;
@@ -564,17 +654,33 @@ body {
   color: var(--text-muted-dash);
 }
 
+.heatmap-wrapper {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.heatmap-y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted-dash);
+  padding: 4px 0;
+}
+
 .heatmap-container {
   display: flex;
   gap: 6px;
-  margin-bottom: 16px;
   opacity: 0.9;
+  flex: 1;
 }
 
 .heatmap-col {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  flex: 1;
 }
 
 .heat-cell {
