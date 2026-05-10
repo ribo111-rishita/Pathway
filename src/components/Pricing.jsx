@@ -1,8 +1,10 @@
 import React from 'react';
 import { Check, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Pricing = () => {
+  const navigate = useNavigate();
   return (
     <section id="pricing" className="pricing-section">
       <div className="container">
@@ -48,7 +50,7 @@ const Pricing = () => {
               </li>
             </ul>
 
-            <button className="btn btn-tier btn-ghost-bg">Start Free Plan</button>
+            <button className="btn btn-tier btn-ghost-bg" onClick={() => navigate('/dashboard')}>Start Free Plan</button>
           </motion.div>
 
           {/* Pro Tier (Highlighted) */}
@@ -82,7 +84,7 @@ const Pricing = () => {
               <li><Check size={16} className="feature-icon pro-icon" /> Certificate of completion</li>
             </ul>
 
-            <button className="btn btn-tier btn-primary">Start Pro Trial</button>
+            <button className="btn btn-tier btn-primary" onClick={() => navigate('/dashboard')}>Start Pro Trial</button>
           </motion.div>
 
           {/* Institutional Tier */}
@@ -108,7 +110,7 @@ const Pricing = () => {
               <li><Check size={16} className="feature-icon" /> Bulk seat discounts</li>
             </ul>
 
-            <button className="btn btn-tier btn-ghost-bg">Contact Sales &rarr;</button>
+            <button className="btn btn-tier btn-ghost-bg" onClick={() => navigate('/dashboard')}>Contact Sales &rarr;</button>
           </motion.div>
         </div>
       </div>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Loader2, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const TimeSelector = () => {
+  const navigate = useNavigate();
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -79,7 +81,7 @@ const TimeSelector = () => {
                 <p style={{ color: '#9ca3af', marginBottom: '24px' }}>
                   Committing {result.value} hour{result.value > 1 ? 's' : ''} a day ensures you maintain focus without burning out.
                 </p>
-                <button className="btn btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                <button className="btn btn-primary" onClick={() => navigate('/dashboard')} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                   Start Your Plan <ArrowRight size={18} />
                 </button>
               </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Star, Clock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const paths = [
   {
@@ -30,6 +31,7 @@ const paths = [
 ];
 
 const ComparePaths = () => {
+  const navigate = useNavigate();
   return (
     <section className="compare-paths-section" style={{ padding: '100px 0', background: 'var(--dash-bg)' }}>
       <div className="container" style={{ maxWidth: '1200px' }}>
@@ -90,7 +92,7 @@ const ComparePaths = () => {
                     </li>
                   ))}
                 </ul>
-                <button className="btn btn-primary" style={{ width: '100%', marginTop: '32px', background: path.color }}>
+                <button className="btn btn-primary" onClick={() => navigate('/dashboard')} style={{ width: '100%', marginTop: '32px', background: path.color }}>
                   Explore Path
                 </button>
               </div>

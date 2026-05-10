@@ -1,9 +1,11 @@
 import React from 'react';
 import { Play, Info, ChevronDown } from 'lucide-react';
 import { Link } from 'react-scroll';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section id="hero" className="hero-section">
       <div className="hero-overlay"></div>
@@ -53,10 +55,10 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <Link to="how-it-works" smooth={true} duration={500} offset={-80} className="btn btn-primary btn-lg" style={{ cursor: 'pointer', display: 'inline-flex' }}>
+          <button onClick={() => navigate('/dashboard')} className="btn btn-primary btn-lg" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', border: 'none' }}>
             <Play size={18} fill="currentColor" className="btn-icon" />
             Start Your Free Path
-          </Link>
+          </button>
 
           <Link to="how-it-works" smooth={true} duration={500} offset={-80} className="btn btn-glass btn-lg" style={{ cursor: 'pointer', display: 'inline-flex' }}>
             <Info size={18} className="btn-icon" />
