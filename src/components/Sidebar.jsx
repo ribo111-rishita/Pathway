@@ -14,6 +14,10 @@ const Sidebar = () => {
     { name: 'Settings', path: '/settings', icon: Settings },
   ];
 
+  const handleLogout = () => {
+    localStorage.removeItem('pathway_user_name');
+  };
+
   return (
     <>
       <button className="mobile-menu-btn" onClick={() => setIsOpen(!isOpen)}>
@@ -47,7 +51,7 @@ const Sidebar = () => {
         </nav>
 
         <div className="sidebar-footer">
-          <Link to="/" className="nav-item logout-item">
+          <Link to="/" className="nav-item logout-item" onClick={handleLogout}>
             <LogOut size={20} className="nav-icon" />
             <span className="nav-label">Logout</span>
           </Link>

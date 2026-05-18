@@ -1,33 +1,98 @@
 import React, { useState } from 'react';
 import { Search, Loader2, Sparkles, CheckCircle, ArrowRight } from 'lucide-react';
-import { motion as fMotion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link as RouterLink } from 'react-router-dom';
+
+const MotionDiv = motion.div;
+
+const buildRoadmapPrompt = (topic) => `
+Create a beginner-friendly learning roadmap for "${topic}".
+Return only valid JSON with this exact shape:
+{
+  "title": "A short roadmap title",
+  "modules": [
+    "Module 1 name",
+    "Module 2 name",
+    "Module 3 name",
+    "Module 4 name"
+  ]
+}
+Rules:
+- Use exactly 4 modules.
+- Keep every module under 7 words.
+- Do not include markdown, explanations, or extra keys.
+`;
+
+const extractRoadmap = (text, topic) => {
+  const jsonText = text.match(/\{[\s\S]*\}/)?.[0] || text;
+  const data = JSON.parse(jsonText);
+
+  if (!data.title || !Array.isArray(data.modules)) {
+    throw new Error('AI response did not include a valid roadmap.');
+  }
+
+  return {
+    title: String(data.title).trim() || `${topic} Roadmap`,
+    modules: data.modules.slice(0, 4).map((mod) => String(mod).trim()).filter(Boolean)
+  };
+};
+
+const saveGeneratedPath = (path) => {
+  localStorage.setItem('pathway_active_course', JSON.stringify(path));
+  localStorage.removeItem('pathway_completed_lessons');
+  localStorage.removeItem('pathway_current_lesson');
+};
 
 const GeneratePath = () => {
   const [query, setQuery] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedPath, setGeneratedPath] = useState(null);
 
-  const handleGenerate = (e) => {
+  const handleGenerate = async (e) => {
     e.preventDefault();
     if (!query.trim()) return;
     
     setIsGenerating(true);
     setGeneratedPath(null);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsGenerating(false);
+    try {
+      const prompt = buildRoadmapPrompt(query.trim());
+      const response = await fetch('https://text.pollinations.ai/openai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'openai',
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Unable to generate roadmap.');
+      }
+
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content;
+      const roadmap = extractRoadmap(content || '', query.trim());
+
+      if (roadmap.modules.length !== 4) {
+        throw new Error('AI response did not include exactly four modules.');
+      }
+
+      setGeneratedPath(roadmap);
+    } catch (error) {
+      console.error(error);
       setGeneratedPath({
-        title: query.toLowerCase().includes('web') ? 'Full-Stack Web Development' : 'UI/UX Design Mastery',
+        title: `${query.trim()} Roadmap`,
         modules: [
           'Fundamentals & Core Concepts',
-          'Intermediate Techniques & Tools',
-          'Advanced Implementation',
-          'Real-World Portfolio Project'
+          'Practice With Essential Tools',
+          'Build Guided Mini Projects',
+          'Complete Portfolio Project'
         ]
       });
-    }, 2000);
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -86,7 +151,7 @@ const GeneratePath = () => {
 
           <AnimatePresence>
             {generatedPath && (
-              <fMotion.div 
+              <MotionDiv 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="generated-result"
@@ -112,7 +177,7 @@ const GeneratePath = () => {
 
                 <div style={{ marginTop: '32px', display: 'flex', justifyContent: 'center' }}>
                   <RouterLink to="/dashboard" style={{ textDecoration: 'none' }}>
-                    <button style={{
+                    <button onClick={() => saveGeneratedPath(generatedPath)} style={{
                       display: 'flex', alignItems: 'center', gap: '8px', background: 'white', color: 'black', 
                       padding: '12px 24px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', border: 'none'
                     }}>
@@ -120,7 +185,7 @@ const GeneratePath = () => {
                     </button>
                   </RouterLink>
                 </div>
-              </fMotion.div>
+              </MotionDiv>
             )}
           </AnimatePresence>
 

@@ -10,6 +10,7 @@ import Contact from './components/Contact';
 import DashboardPreview from './components/DashboardPreview';
 import GeneratePath from './components/GeneratePath';
 import Dashboard from './components/Dashboard';
+import AuthPage from './components/AuthPage';
 
 import CareerOutcomes from './components/CareerOutcomes';
 import ComparePaths from './components/ComparePaths';
@@ -53,6 +54,8 @@ function App() {
       <div className="app-container">
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<><Navbar /><AuthPage mode="login" /></>} />
+          <Route path="/signup" element={<><Navbar /><AuthPage mode="signup" /></>} />
           <Route path="/dashboard" element={
             <DashboardLayout>
               <Dashboard />

@@ -50,6 +50,36 @@ const COURSE_STRUCTURE = {
   ]
 };
 
+const createCourseFromRoadmap = (roadmap) => ({
+  id: 'generated_course',
+  title: roadmap.title || COURSE_STRUCTURE.title,
+  modules: (roadmap.modules?.length ? roadmap.modules : COURSE_STRUCTURE.modules.map(mod => mod.title)).map((moduleTitle, index) => ({
+    id: `gen_mod_${index + 1}`,
+    title: moduleTitle,
+    lessons: [
+      { id: `gen_l_${index + 1}_1`, title: `${moduleTitle} Overview`, durationMins: 20 },
+      { id: `gen_l_${index + 1}_2`, title: `${moduleTitle} Practice`, durationMins: 30 }
+    ]
+  }))
+});
+
+const getSavedCourse = () => {
+  const saved = localStorage.getItem('pathway_active_course');
+  if (!saved) return COURSE_STRUCTURE;
+
+  try {
+    return createCourseFromRoadmap(JSON.parse(saved));
+  } catch (error) {
+    console.error(error);
+    return COURSE_STRUCTURE;
+  }
+};
+
+const getInitialLesson = (course) => ({
+  moduleId: course.modules[0]?.id || 'done',
+  lessonId: course.modules[0]?.lessons[0]?.id || 'done'
+});
+
 // Generate some dummy initial activity data based on real dates
 const generateDummyActivity = () => {
   const data = {};
@@ -64,20 +94,23 @@ const generateDummyActivity = () => {
 };
 
 const Dashboard = () => {
+  const [course] = useState(getSavedCourse);
+  const [userName] = useState(() => localStorage.getItem('pathway_user_name') || 'User');
+
   // 2. Explicit State Variables with localStorage hydration
   
   const [completedLessons, setCompletedLessons] = useState(() => {
     const saved = localStorage.getItem('pathway_completed_lessons');
     // Fallback: assume mod_1 and mod_2 are fully completed initially
-    return saved ? JSON.parse(saved) : ['l_1', 'l_2', 'l_3', 'l_4', 'l_5', 'l_6'];
+    return saved ? JSON.parse(saved) : course.id === 'generated_course' ? [] : ['l_1', 'l_2', 'l_3', 'l_4', 'l_5', 'l_6'];
   });
 
   const [currentLesson, setCurrentLesson] = useState(() => {
     const saved = localStorage.getItem('pathway_current_lesson');
-    return saved ? JSON.parse(saved) : { moduleId: 'mod_3', lessonId: 'l_7' };
+    return saved ? JSON.parse(saved) : course.id === 'generated_course' ? getInitialLesson(course) : { moduleId: 'mod_3', lessonId: 'l_7' };
   });
 
-  const [streak, setStreak] = useState(() => {
+  const [streak] = useState(() => {
     const saved = localStorage.getItem('pathway_streak');
     return saved ? parseInt(saved, 10) : 4;
   });
@@ -104,11 +137,11 @@ const Dashboard = () => {
   // 3. Dynamic Progress Calculations
   
   // Overall Progress
-  const totalLessonsInCourse = COURSE_STRUCTURE.modules.reduce((acc, mod) => acc + mod.lessons.length, 0);
+  const totalLessonsInCourse = course.modules.reduce((acc, mod) => acc + mod.lessons.length, 0);
   const courseProgressPercentage = Math.round((completedLessons.length / totalLessonsInCourse) * 100);
 
   // Active Module Calculations
-  const activeModule = COURSE_STRUCTURE.modules.find(m => m.id === currentLesson.moduleId);
+  const activeModule = course.modules.find(m => m.id === currentLesson.moduleId);
   const activeLesson = activeModule?.lessons.find(l => l.id === currentLesson.lessonId);
   
   const completedLessonsInActiveModule = activeModule ? activeModule.lessons.filter(l => completedLessons.includes(l.id)).length : 0;
@@ -118,7 +151,7 @@ const Dashboard = () => {
   const timeRemainingInModule = activeModule ? activeModule.lessons.filter(l => !completedLessons.includes(l.id)).reduce((acc, l) => acc + l.durationMins, 0) : 0;
 
   // Path Tracker Data
-  const pathSteps = COURSE_STRUCTURE.modules.map(mod => {
+  const pathSteps = course.modules.map(mod => {
     const isCompleted = mod.lessons.every(l => completedLessons.includes(l.id));
     const isActive = mod.id === currentLesson.moduleId;
     return {
@@ -148,9 +181,9 @@ const Dashboard = () => {
       nextLessonId = activeModule.lessons[currentIndex + 1].id;
     } else {
       // Next module
-      const currentModIndex = COURSE_STRUCTURE.modules.findIndex(m => m.id === activeModule.id);
-      if (currentModIndex + 1 < COURSE_STRUCTURE.modules.length) {
-        const nextMod = COURSE_STRUCTURE.modules[currentModIndex + 1];
+      const currentModIndex = course.modules.findIndex(m => m.id === activeModule.id);
+      if (currentModIndex + 1 < course.modules.length) {
+        const nextMod = course.modules[currentModIndex + 1];
         nextModuleId = nextMod.id;
         nextLessonId = nextMod.lessons[0].id;
       }
@@ -175,7 +208,7 @@ const Dashboard = () => {
   };
 
   const handleStepClick = (step) => {
-    const clickedModule = COURSE_STRUCTURE.modules.find(m => m.id === step.id);
+    const clickedModule = course.modules.find(m => m.id === step.id);
     if (!clickedModule) return;
 
     // Find first uncompleted lesson in the module, or default to the first lesson
@@ -200,7 +233,7 @@ const Dashboard = () => {
     {
       icon: BookOpen,
       label: "Modules Completed",
-      value: `${completedModulesCount} / ${COURSE_STRUCTURE.modules.length}`,
+      value: `${completedModulesCount} / ${course.modules.length}`,
       trend: "flat",
       trendLabel: "On track",
       colorTheme: "purple"
@@ -220,17 +253,18 @@ const Dashboard = () => {
       <main className="dash-main-dense">
         
         <DashboardHeader 
-          userName="User" 
+          userName={userName} 
           streak={streak} 
           hoursLearned={Math.round(totalHoursLearned)} 
           dailyGoal="1h" 
+          courseTitle={course.title}
         />
 
         <div className="dash-grid-12">
           
           {activeModule && activeLesson ? (
             <ResumeLearningCard 
-              moduleNumber={COURSE_STRUCTURE.modules.findIndex(m => m.id === activeModule.id) + 1}
+              moduleNumber={course.modules.findIndex(m => m.id === activeModule.id) + 1}
               progress={currentModuleProgress}
               title={activeLesson.title}
               description={`Continue with module ${activeModule.title}. Master the required skills to unlock the next step.`}
@@ -242,7 +276,7 @@ const Dashboard = () => {
              <div className="grid-card col-span-8 primary-card">
               <div className="primary-content" style={{ justifyContent: 'center', alignItems: 'center' }}>
                  <h2>Course Completed! 🎉</h2>
-                 <p>You have finished all modules in {COURSE_STRUCTURE.title}.</p>
+                 <p>You have finished all modules in {course.title}.</p>
               </div>
              </div>
           )}

@@ -3,6 +3,8 @@ import { Link as ScrollLink } from 'react-scroll';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
+const MotionNav = motion.nav;
+
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -23,7 +25,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <motion.nav
+    <MotionNav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: 'spring', stiffness: 120, damping: 20 }}
@@ -51,8 +53,8 @@ const Navbar = () => {
           </div>
         </div>
         <div className="nav-right">
-          <button className="btn btn-ghost" onClick={() => navigate('/dashboard')}>Log In</button>
-          <button className="btn btn-primary btn-sm" onClick={() => navigate('/dashboard')}>Get Started</button>
+          <button className="btn btn-ghost" onClick={() => navigate('/login')}>Log In</button>
+          <button className="btn btn-primary btn-sm" onClick={() => navigate('/signup')}>Get Started</button>
         </div>
       </div>
       <style>{`
@@ -129,7 +131,7 @@ const Navbar = () => {
           font-weight: 600;
         }
       `}</style>
-    </motion.nav>
+    </MotionNav>
   );
 };
 

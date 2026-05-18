@@ -4,6 +4,10 @@ import { Link } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
+const MotionDiv = motion.div;
+const MotionH1 = motion.h1;
+const MotionP = motion.p;
+
 const Hero = () => {
   const navigate = useNavigate();
   return (
@@ -21,7 +25,7 @@ const Hero = () => {
 
 
       <div className="hero-content">
-        <motion.div
+        <MotionDiv
           className="badge"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -29,33 +33,33 @@ const Hero = () => {
         >
           <span className="badge-icon">✧</span>
           THE FUTURE OF EDUCATION
-        </motion.div>
+        </MotionDiv>
 
-        <motion.h1
+        <MotionH1
           className="hero-title"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           Stop Guessing.<br />Start Learning.
-        </motion.h1>
+        </MotionH1>
 
-        <motion.p
+        <MotionP
           className="hero-subtitle"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           Pathway provides structured, AI-guided learning paths so you always know exactly what to learn next. Join 10,000+ learners achieving their goals.
-        </motion.p>
+        </MotionP>
 
-        <motion.div
+        <MotionDiv
           className="hero-actions"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
-          <button onClick={() => navigate('/dashboard')} className="btn btn-primary btn-lg" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', border: 'none' }}>
+          <button onClick={() => navigate('/signup')} className="btn btn-primary btn-lg" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', border: 'none' }}>
             <Play size={18} fill="currentColor" className="btn-icon" />
             Start Your Free Path
           </button>
@@ -64,9 +68,9 @@ const Hero = () => {
             <Info size={18} className="btn-icon" />
             See How It Works
           </Link>
-        </motion.div>
+        </MotionDiv>
 
-        <motion.div
+        <MotionDiv
           className="trust-banner"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -79,7 +83,7 @@ const Hero = () => {
             <span className="trust-logo">Google</span>
             <span className="trust-logo">Amazon</span>
           </div>
-        </motion.div>
+        </MotionDiv>
       </div>
 
       <div className="scroll-indicator">

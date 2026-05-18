@@ -1,12 +1,12 @@
 import React from 'react';
 import { Flame, Clock, Target } from 'lucide-react';
 
-const DashboardHeader = ({ userName, streak, hoursLearned, dailyGoal }) => {
+const DashboardHeader = ({ userName, streak, hoursLearned, dailyGoal, courseTitle = 'UI/UX Design Mastery' }) => {
   return (
     <header className="dash-header-compact">
       <div className="header-greeting">
         <h1>Welcome back, {userName}</h1>
-        <p>UI/UX Design Mastery</p>
+        <p>{courseTitle}</p>
       </div>
       
       <div className="header-metrics">
